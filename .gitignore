@@ -1,24 +1,7 @@
 __pycache__/
 .ipynb_checkpoints/
-archive/
-videos/
-data/*/*.npz
-vae/*.h5
-rnn/*.h5
-vae/*.json
-rnn/*.json
-vae/*.png
-rnn/*.png
-log/
-
-copy_files.sh
 
 *.pyc
 .DS_Store
-controller/car_racing.cma.4.32.best.json
-controller/car_racing.cma.4.32.es.pk
-data/initial_z.npz
 .gitignore
 data*
-.gitignore
-.gitignore
