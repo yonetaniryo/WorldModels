@@ -5,12 +5,10 @@ from rnn.arch import RNN
 import argparse
 import numpy as np
 import os
-
-ROOT_DIR_NAME = './data/'
-SERIES_DIR_NAME = './data/series/'
+import subprocess
 
 
-def get_filelist(N):
+def get_filelist(N, SERIES_DIR_NAME):
     filelist = os.listdir(SERIES_DIR_NAME)
     filelist = [x for x in filelist if x != '.DS_Store']
     filelist.sort()
@@ -18,15 +16,15 @@ def get_filelist(N):
 
 
     if length_filelist > N:
-      filelist = filelist[:N]
+        filelist = filelist[:N]
 
     if length_filelist < N:
-      N = length_filelist
+        N = length_filelist
 
     return filelist, N
 
 
-def random_batch(filelist, batch_size):
+def random_batch(filelist, batch_size, SERIES_DIR_NAME):
 	N_data = len(filelist)
 	indices = np.random.permutation(N_data)[0:batch_size]
 
@@ -68,54 +66,59 @@ def random_batch(filelist, batch_size):
 	return z_list, action_list, rew_list, done_list
 
 def main(args):
-	
-	new_model = args.new_model
-	N = int(args.N)
-	steps = int(args.steps)
-	batch_size = int(args.batch_size)
 
-	rnn = RNN() #learning_rate = LEARNING_RATE
+    ROOT_DIR_NAME = args.root_dir
+    ROLLOUT_DIR_NAME = ROOT_DIR_NAME + "/rollout/"
+    SERIES_DIR_NAME = ROOT_DIR_NAME + "/series/"
+    RNN_DIR_NAME = ROOT_DIR_NAME + "/rnn/"
+    subprocess.run(['mkdir', '-p', RNN_DIR_NAME])
+    
+    new_model = args.new_model
+    N = int(args.N)
+    steps = int(args.steps)
+    batch_size = int(args.batch_size)
 
-	if not new_model:
-		try:
-			rnn.set_weights('./rnn/weights.h5')
-		except:
-			print("Either set --new_model or ensure ./rnn/weights.h5 exists")
-			raise
+    rnn = RNN() #learning_rate = LEARNING_RATE
 
-
-	filelist, N = get_filelist(N)
-
-
-	for step in range(steps):
-		print('STEP ' + str(step))
-
-		z, action, rew ,done = random_batch(filelist, batch_size)
-
-		rnn_input = np.concatenate([z[:, :-1, :], action[:, :-1, :], rew[:, :-1, :]], axis = 2)
-		rnn_output = np.concatenate([z[:, 1:, :], rew[:, 1:, :]], axis = 2) #, done[:, 1:, :]
-
-		if step == 0:
-			np.savez_compressed(ROOT_DIR_NAME + 'rnn_files.npz', rnn_input = rnn_input, rnn_output = rnn_output)
-
-		rnn.train(rnn_input, rnn_output)
-
-		if step % 10 == 0:
-
-			rnn.model.save_weights('./rnn/weights.h5')
-
-	rnn.model.save_weights('./rnn/weights.h5')
+    if not new_model:
+    	try:
+    		rnn.set_weights(RNN_DIR_NAME + 'weights.h5')
+    	except:
+    		print("Either set --new_model or ensure ./rnn/weights.h5 exists")
+    		raise
 
 
+    filelist, N = get_filelist(N, SERIES_DIR_NAME)
+
+
+    for step in range(steps):
+    	print('STEP ' + str(step))
+
+    	z, action, rew, done = random_batch(filelist, batch_size, SERIES_DIR_NAME)
+
+    	rnn_input = np.concatenate([z[:, :-1, :], action[:, :-1, :], rew[:, :-1, :]], axis = 2)
+    	rnn_output = np.concatenate([z[:, 1:, :], rew[:, 1:, :]], axis = 2) #, done[:, 1:, :]
+
+    	if step == 0:
+    		np.savez_compressed(ROOT_DIR_NAME + '/rnn_files.npz', rnn_input = rnn_input, rnn_output = rnn_output)
+
+    	rnn.train(rnn_input, rnn_output)
+
+    	if step % 10 == 0:
+
+    		rnn.model.save_weights(RNN_DIR_NAME + 'weights.h5')
+
+    rnn.model.save_weights(RNN_DIR_NAME + 'weights.h5')
 
 
 if __name__ == "__main__":
-		parser = argparse.ArgumentParser(description=('Train RNN'))
-		parser.add_argument('--N',default = 10000, help='number of episodes to use to train')
-		parser.add_argument('--new_model', action='store_true', help='start a new model from scratch?')
-		parser.add_argument('--steps', default = 4000, help='how many rnn batches to train over')
-		parser.add_argument('--batch_size', default = 100, help='how many episodes in a batch?')
+    parser = argparse.ArgumentParser(description=('Train RNN'))
+    parser.add_argument('--N', default = 10000, help='number of episodes to use to train')
+    parser.add_argument('--new_model', action='store_true', help='start a new model from scratch?')
+    parser.add_argument('--steps', default = 4000, help='how many rnn batches to train over')
+    parser.add_argument('--batch_size', default = 100, help='how many episodes in a batch?')
+    parser.add_argument('--root_dir', default='./data', type=str, help='save directory')
 
-		args = parser.parse_args()
+    args = parser.parse_args()
 
-		main(args)
+    main(args)

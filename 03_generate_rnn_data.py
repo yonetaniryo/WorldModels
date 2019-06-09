@@ -5,24 +5,20 @@ import argparse
 import config
 import numpy as np
 import os
-
-ROOT_DIR_NAME = "./data/"
-ROLLOUT_DIR_NAME = "./data/rollout/"
-SERIES_DIR_NAME = "./data/series/"
+import subprocess
 
 
-def get_filelist(N):
+def get_filelist(N, ROLLOUT_DIR_NAME):
     filelist = os.listdir(ROLLOUT_DIR_NAME)
     filelist = [x for x in filelist if x != '.DS_Store']
     filelist.sort()
     length_filelist = len(filelist)
 
-
     if length_filelist > N:
-      filelist = filelist[:N]
+        filelist = filelist[:N]
 
     if length_filelist < N:
-      N = length_filelist
+        N = length_filelist
 
     return filelist, N
 
@@ -44,21 +40,25 @@ def encode_episode(vae, episode):
     return (mu, log_var, action, reward, done, initial_mu, initial_log_var)
 
 
-
 def main(args):
+    ROOT_DIR_NAME = args.root_dir
+    ROLLOUT_DIR_NAME = ROOT_DIR_NAME + "/rollout/"
+    SERIES_DIR_NAME = ROOT_DIR_NAME + "/series/"
+    VAE_DIR_NAME = ROOT_DIR_NAME + "/vae/"
+    subprocess.run(['mkdir', '-p', SERIES_DIR_NAME])
 
     N = args.N
 
     vae = VAE()
 
     try:
-      vae.set_weights('./vae/weights.h5')
+        vae.set_weights(VAE_DIR_NAME + 'weights.h5')
     except:
-      print("./vae/weights.h5 does not exist - ensure you have run 02_train_vae.py first")
-      raise
+        print("./vae/weights.h5 does not exist - ensure you have run 02_train_vae.py first")
+        raise
 
 
-    filelist, N = get_filelist(N)
+    filelist, N = get_filelist(N, ROLLOUT_DIR_NAME)
 
     file_count = 0
 
@@ -66,23 +66,23 @@ def main(args):
     initial_log_vars = []
 
     for file in filelist:
-      try:
+        try:
       
-        rollout_data = np.load(ROLLOUT_DIR_NAME + file)
+            rollout_data = np.load(ROLLOUT_DIR_NAME + file)
 
-        mu, log_var, action, reward, done, initial_mu, initial_log_var = encode_episode(vae, rollout_data)
+            mu, log_var, action, reward, done, initial_mu, initial_log_var = encode_episode(vae, rollout_data)
 
-        np.savez_compressed(SERIES_DIR_NAME + file, mu=mu, log_var=log_var, action = action, reward = reward, done = done)
-        initial_mus.append(initial_mu)
-        initial_log_vars.append(initial_log_var)
+            np.savez_compressed(SERIES_DIR_NAME + file, mu=mu, log_var=log_var, action = action, reward = reward, done = done)
+            initial_mus.append(initial_mu)
+            initial_log_vars.append(initial_log_var)
 
-        file_count += 1
+            file_count += 1
 
-        if file_count%50==0:
-          print('Encoded {} / {} episodes'.format(file_count, N))
+            if file_count%50==0:
+                print('Encoded {} / {} episodes'.format(file_count, N))
 
-      except:
-        print('Skipped {}...'.format(file))
+        except:
+            print('Skipped {}...'.format(file))
 
     print('Encoded {} / {} episodes'.format(file_count, N))
 
@@ -92,12 +92,13 @@ def main(args):
     print('ONE MU SHAPE = {}'.format(mu.shape))
     print('INITIAL MU SHAPE = {}'.format(initial_mus.shape))
 
-    np.savez_compressed(ROOT_DIR_NAME + 'initial_z.npz', initial_mu=initial_mus, initial_log_var=initial_log_vars)
+    np.savez_compressed(ROOT_DIR_NAME + '/initial_z.npz', initial_mu=initial_mus, initial_log_var=initial_log_vars)
 
     
 if __name__ == "__main__":
-  parser = argparse.ArgumentParser(description=('Generate RNN data'))
-  parser.add_argument('--N',default = 10000, help='number of episodes to use to train')
-  args = parser.parse_args()
+    parser = argparse.ArgumentParser(description=('Generate RNN data'))
+    parser.add_argument('--N', default = 10000, type=int, help='number of episodes to use to train')
+    parser.add_argument('--root_dir', default='./data', type=str, help='save directory')
+    args = parser.parse_args()
 
-  main(args)
+    main(args)

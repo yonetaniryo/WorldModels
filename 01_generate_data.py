@@ -1,17 +1,14 @@
-# xvfb-run -s "-screen 0 1400x900x24" python 01_generate_data.py
-# car_racing --total_episodes 200 --time_steps 300
+# xvfb-run -s "-screen 0 1400x900x24" python 01_generate_data.py car_racing --total_episodes 200 --time_steps 300 --save_dir ./data2/rollout/
 
 import numpy as np
 import random
 import config
+import subprocess
 #import matplotlib.pyplot as plt
 
 from env import make_env
 
 import argparse
-
-DIR_NAME = './data/rollout/'
-
 
 def main(args):
 
@@ -21,6 +18,9 @@ def main(args):
     render = args.render
     run_all_envs = args.run_all_envs
     action_refresh_rate = args.action_refresh_rate
+    ROOT_DIR_NAME = args.root_dir
+    ROLLOUT_DIR_NAME = ROOT_DIR_NAME + "/rollout/"
+    subprocess.run(['mkdir', '-p', ROLLOUT_DIR_NAME])
 
     if run_all_envs:
         envs_to_generate = config.train_envs
@@ -36,7 +36,7 @@ def main(args):
         while s < total_episodes:
 
             episode_id = random.randint(0, 2**31 - 1)
-            filename = DIR_NAME + str(episode_id) + ".npz"
+            filename = ROLLOUT_DIR_NAME + str(episode_id) + ".npz"
 
             observation = env.reset()
 
@@ -92,6 +92,7 @@ if __name__ == "__main__":
                         help='how often to change the random action, in frames')
     parser.add_argument('--run_all_envs', action='store_true',
                         help='if true, will ignore env_name and loop over all envs in train_envs variables in config.py')
+    parser.add_argument('--root_dir', default='./data', type=str, help='save directory')
 
     args = parser.parse_args()
     main(args)

@@ -15,3 +15,10 @@ copy_files.sh
 
 *.pyc
 .DS_Store
+controller/car_racing.cma.4.32.best.json
+controller/car_racing.cma.4.32.es.pk
+data/initial_z.npz
+.gitignore
+data*
+.gitignore
+.gitignore
