@@ -14,7 +14,7 @@ from pyglet import gl
 
 # Custom for Parallel WM
 from custom_envs.car_dynamics_02 import Car
-CAMERA_PARAM = 2.
+CAMERA_PARAM = 1.25
 
 # Easiest continuous control task to learn from pixels, a top-down racing environment.
 # Discreet control is reasonable in this environment as well, on/off discretisation is
@@ -74,7 +74,7 @@ VIDEO_H = 400
 WINDOW_W = 1200
 WINDOW_H = 1000
 
-SCALE       = 4.0        # Track scale
+SCALE       = 6.0        # Track scale
 TRACK_RAD   = 900/SCALE  # Track is heavily morphed circle with this radius
 PLAYFIELD   = 3000/SCALE # Game over boundary
 FPS         = 50

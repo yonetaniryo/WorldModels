@@ -15,7 +15,7 @@ import config
 
 from gym.wrappers import Monitor
 
-from env import make_env
+from env import make_env_car_racing as make_env
 from vae.arch import VAE
 from rnn.arch import RNN
 from controller.arch import Controller

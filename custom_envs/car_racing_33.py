@@ -74,7 +74,7 @@ VIDEO_H = 400
 WINDOW_W = 1200
 WINDOW_H = 1000
 
-SCALE       = 4.0        # Track scale
+SCALE       = 6.0        # Track scale
 TRACK_RAD   = 900/SCALE  # Track is heavily morphed circle with this radius
 PLAYFIELD   = 3000/SCALE # Game over boundary
 FPS         = 50

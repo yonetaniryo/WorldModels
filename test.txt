@@ -1,0 +1,58 @@
+assigning the rank and nworkers 17 1
+assigning the rank and nworkers 17 6
+assigning the rank and nworkers 17 8
+assigning the rank and nworkers 17 11
+assigning the rank and nworkers 17 2
+assigning the rank and nworkers 17 4
+assigning the rank and nworkers 17 9
+assigning the rank and nworkers 17 7
+assigning the rank and nworkers 17 13
+assigning the rank and nworkers 17 0
+assigning the rank and nworkers 17 12
+assigning the rank and nworkers 17 3
+assigning the rank and nworkers 17 14
+assigning the rank and nworkers 17 10
+assigning the rank and nworkers 17 16
+assigning the rank and nworkers 17 5
+assigning the rank and nworkers 17 15
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=607936, Fri Jun 14 04:16:13 2019)
+('process', 1, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=582770, Fri Jun 14 04:16:13 2019)
+('process', 8, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=650338, Fri Jun 14 04:16:13 2019)
+('process', 0, 'out of total ', 17, 'started')
+('training', 'car_racing_11')
+('population', 32)
+('num_worker', 16)
+('num_worker_trial', 2)
+('num_episode', 4)
+('max_length', 1000)
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=632140, Fri Jun 14 04:16:13 2019)
+('process', 9, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=583316, Fri Jun 14 04:16:13 2019)
+('process', 6, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=622771, Fri Jun 14 04:16:13 2019)
+('process', 4, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=631835, Fri Jun 14 04:16:13 2019)
+('process', 3, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=643664, Fri Jun 14 04:16:13 2019)
+('process', 10, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=637864, Fri Jun 14 04:16:13 2019)
+('process', 14, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=642782, Fri Jun 14 04:16:13 2019)
+('process', 13, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=607859, Fri Jun 14 04:16:13 2019)
+('process', 15, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=567512, Fri Jun 14 04:16:13 2019)
+('process', 2, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=572940, Fri Jun 14 04:16:13 2019)
+('process', 7, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=567874, Fri Jun 14 04:16:13 2019)
+('process', 11, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=585040, Fri Jun 14 04:16:13 2019)
+('process', 5, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=592565, Fri Jun 14 04:16:13 2019)
+('process', 12, 'out of total ', 17, 'started')
+(16_w,32)-aCMA-ES (mu_w=9.2,w_1=19%) in dimension 867 (seed=622842, Fri Jun 14 04:16:13 2019)
+('process', 16, 'out of total ', 17, 'started')
+['mpirun', '-np', '17', '/usr/local/bin/python', '05_train_controller.py', 'car_racing_11', '--num_worker', '16', '--num_worker_trial', '2', '--num_episode', '4', '--max_length', '1000', '--eval_steps', '25', '--root_dir=./car_racing_11']

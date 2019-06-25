@@ -6,7 +6,7 @@ import config
 import subprocess
 #import matplotlib.pyplot as plt
 
-from env import make_env
+from env import make_env_car_racing as make_env
 
 import argparse
 

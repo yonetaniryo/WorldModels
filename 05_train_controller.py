@@ -467,8 +467,12 @@ def master(ROOT_DIR_NAME):
 
 
 def main(args):
+
+
+    
     global env_name, optimizer, init_opt, num_episode, eval_steps, max_length, num_worker, num_worker_trial, antithetic, seed_start, retrain_mode, dream_mode, cap_time_mode  # , vae_version, rnn_version,
     ROOT_DIR_NAME = args.root_dir
+    config.train_envs = [ROOT_DIR_NAME[2:]]
     env_name = args.env_name
     optimizer = args.optimizer
     init_opt = args.init_opt

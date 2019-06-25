@@ -1,0 +1,18 @@
+assigning the rank and nworkers 17 10
+assigning the rank and nworkers 17 11
+assigning the rank and nworkers 17 16
+assigning the rank and nworkers 17 6
+assigning the rank and nworkers 17 15
+assigning the rank and nworkers 17 13
+assigning the rank and nworkers 17 4
+assigning the rank and nworkers 17 2
+assigning the rank and nworkers 17 0
+assigning the rank and nworkers 17 9
+assigning the rank and nworkers 17 1
+assigning the rank and nworkers 17 5
+assigning the rank and nworkers 17 14
+assigning the rank and nworkers 17 8
+assigning the rank and nworkers 17 3
+assigning the rank and nworkers 17 12
+assigning the rank and nworkers 17 7
+['mpirun', '-np', '17', '/usr/local/bin/python', '05_train_controller.py', 'car_racing_11', '--num_worker', '16', '--num_worker_trial', '2', '--num_episode', '4', '--max_length', '1000', '--eval_steps', '25', '--root_dir=./car_racing_11']

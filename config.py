@@ -1,8 +1,8 @@
 import numpy as np
 import random
 
-train_envs = ['car_racing']
-test_envs = ['car_racing']
+# train_envs = ['car_racing'] # to avoid unexpected bug
+# test_envs = ['car_racing']
 
 def generate_data_action(t, env):
 
